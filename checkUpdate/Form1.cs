@@ -19,7 +19,6 @@ namespace checkUpdate
 {
     public partial class Form1 : Form
     {
-        Thread hts;
 
         string serverMysql = null;
         string serverFtp = null;
@@ -35,10 +34,8 @@ namespace checkUpdate
             serverMysql = xlJson.ReadJSON("serverMysql");
             serverFtp = xlJson.ReadJSON("serverFtp");
             sophienban = xlJson.ReadJSON("phienban");
-
-            hts = new Thread(Kiemtra);
-            hts.IsBackground = true;
-            hts.Start();
+            
+            Kiemtra();
         }
         public void Kiemtra()
         {
@@ -51,14 +48,17 @@ namespace checkUpdate
                     if (tenfile == "danhmucVM_client")
                     {
                         HamKiemtraphienban(tenfile, "vmcnf");
+                        return;
                     }
                     else if (tenfile == "khocnf")
                     {
                         HamKiemtraphienban(tenfile, "khocnf");
+                        return;
                     }
                     else if (tenfile == "KhuyenMai")
                     {
                         HamKiemtraphienban(tenfile, "khuyenmaicnf");
+                        return;
                     }
                 }
             }
@@ -106,9 +106,7 @@ namespace checkUpdate
         }
         public void Khoichay(string tenungdung)
         {
-                ProcessStartInfo startInfo = new ProcessStartInfo(Application.StartupPath + "/" + tenungdung + ".exe");
-                startInfo.UseShellExecute = true;
-                Process.Start(startInfo);
+            Process.Start(Application.StartupPath + "/" + tenungdung + ".exe");
         }
     }
 }
